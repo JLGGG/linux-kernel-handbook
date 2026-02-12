@@ -23,8 +23,18 @@ make menuconfig # configuration using GUI
 Building the kernel is indeed a very memory- and CPU-intensive job. I recommend you to switch from GUI to CLI. We must also finish kernel configuration before starting make.
 ```
 sudo systemctl isolate multi-user.target # No GUI
-systemd calls graphical.target # come back to GUI
+sudo systemctl isolate graphical.target # come back to GUI
 
-make -j8 # root of kernel source tree
+make -j$(nproc) # root of kernel source tree
 ```
 After finishing build, bzImage is located in "arch/< arch >/boot/."
+
+Install kernel module to /lib/modules
+```
+sudo make modules_install
+```
+
+Generate initramfs (initial RAM filesystem) in /boot
+```
+sudo make install
+```
